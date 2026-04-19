@@ -1,0 +1,401 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Minimal project-level customizations */
+html, body, #root { height: 100%; }
+
+/* Light Theme - Enhanced for Better Visibility */
+:root[data-theme="light"],
+:root {
+  --bg-primary: #f0f4f8;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --text-primary: #1a202c;
+  --text-secondary: #4a5568;
+  --border-color: #cbd5e0;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --accent-primary: #3182ce;
+  --accent-hover: #2c5282;
+  --success: #48bb78;
+  --warning: #ed8936;
+  --danger: #f56565;
+  --info: #4299e1;
+}
+
+/* Dark Theme - Enhanced Contrast */
+:root[data-theme="dark"] {
+  --bg-primary: #0f1419;
+  --bg-secondary: #1a1f2e;
+  --bg-card: #242b3d;
+  --text-primary: #e2e8f0;
+  --text-secondary: #a0aec0;
+  --border-color: #2d3748;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --accent-primary: #4299e1;
+  --accent-hover: #3182ce;
+  --success: #48bb78;
+  --warning: #ed8936;
+  --danger: #fc8181;
+  --info: #63b3ed;
+}
+
+/* Apply theme variables */
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* Enhanced Card Styles */
+.travel-card {
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-color);
+  box-shadow: 0 4px 12px var(--shadow);
+  transition: all 0.3s ease;
+}
+
+.travel-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px var(--shadow);
+  border-color: var(--accent-primary);
+}
+
+/* Button Enhancements */
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(49, 130, 206, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(49, 130, 206, 0.4);
+}
+
+/* Input Field Enhancements */
+input, textarea, select {
+  background-color: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.2);
+}
+
+/* Badge Styles */
+.badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.badge-success { background-color: var(--success); color: white; }
+.badge-warning { background-color: var(--warning); color: white; }
+.badge-danger { background-color: var(--danger); color: white; }
+.badge-info { background-color: var(--info); color: white; }
+
+/* Navigation Enhancement */
+.nav-tab {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-tab::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background: var(--accent-primary);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-tab.active::after {
+  width: 100%;
+}
+
+/* Dark mode enhancements */
+[data-theme="dark"] .bg-gray-50 { background-color: var(--bg-primary) !important; }
+[data-theme="dark"] .bg-white { background-color: var(--bg-card) !important; }
+[data-theme="dark"] .bg-gray-100 { background-color: var(--bg-secondary) !important; }
+[data-theme="dark"] .bg-gray-200 { background-color: #2a3442 !important; }
+[data-theme="dark"] .text-gray-900 { color: var(--text-primary) !important; }
+[data-theme="dark"] .text-gray-800 { color: #e2e8f0 !important; }
+[data-theme="dark"] .text-gray-700 { color: #cbd5e0 !important; }
+[data-theme="dark"] .text-gray-600 { color: var(--text-secondary) !important; }
+[data-theme="dark"] .text-gray-500 { color: #a0aec0 !important; }
+[data-theme="dark"] .border-gray-200 { border-color: var(--border-color) !important; }
+[data-theme="dark"] .border-gray-300 { border-color: #374151 !important; }
+[data-theme="dark"] .shadow-md { box-shadow: 0 4px 12px var(--shadow) !important; }
+[data-theme="dark"] .shadow-lg { box-shadow: 0 10px 24px var(--shadow) !important; }
+[data-theme="dark"] .hover\:bg-gray-100:hover { background-color: var(--bg-secondary) !important; }
+[data-theme="dark"] .hover\:bg-gray-50:hover { background-color: #333333 !important; }
+body { @apply bg-gray-50 text-gray-900; }
+
+/* Modern Login Page Styles */
+.login-container {
+    display: flex;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+.image-side {
+    flex: 1;
+    background: url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3') center/cover;
+    position: relative;
+}
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+    display: flex;
+    align-items: flex-end;
+    padding: 40px;
+    color: white;
+}
+.form-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px;
+    background: #ffffff;
+}
+
+[data-theme="dark"] .form-side {
+    background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .login-container h2,
+[data-theme="dark"] .form-side h2 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-side p {
+    color: var(--text-secondary);
+}
+
+[data-theme="dark"] .form-side label {
+    color: var(--text-primary);
+}
+.modern-input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 2px solid #eee;
+    border-radius: 12px;
+    transition: 0.3s;
+    background-color: #ffffff;
+    color: #111827;
+}
+.modern-input:focus {
+    border-color: #00b4d8; /* Teal Blue */
+    outline: none;
+}
+
+[data-theme="dark"] .modern-input {
+    background-color: #3a3a3a;
+    border-color: #505050;
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .modern-input::placeholder {
+    color: #6b7280;
+}
+
+[data-theme="dark"] .modern-input:focus {
+    border-color: #00b4d8;
+    background-color: #404040;
+}
+
+/* Improved form visibility styles */
+[data-theme="dark"] .text-gray-700,
+[data-theme="dark"] .text-gray-800 {
+    color: #f3f4f6 !important;
+}
+
+[data-theme="dark"] .text-gray-600 {
+    color: #d1d5db !important;
+}
+
+[data-theme="dark"] .text-gray-500 {
+    color: #b0b7c3 !important;
+}
+
+[data-theme="dark"] .text-gray-400 {
+    color: #9ca3af !important;
+}
+
+/* Enhanced dark mode backgrounds and sections */
+[data-theme="dark"] .bg-gray-50 {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
+}
+
+[data-theme="dark"] .bg-gradient-to-r {
+    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #06b6d4 100%) !important;
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3) !important;
+}
+
+[data-theme="dark"] .border-blue-200 {
+    border-color: #2563eb !important;
+}
+
+[data-theme="dark"] .border-gray-200,
+[data-theme="dark"] .border-gray-300 {
+    border-color: #374151 !important;
+}
+
+/* Enhanced input styling for dark mode */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background-color: #1f2937 !important;
+    color: #f9fafb !important;
+    border-color: #4b5563 !important;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] select::placeholder,
+[data-theme="dark"] textarea::placeholder {
+    color: #6b7280 !important;
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus {
+    background-color: #111827 !important;
+    border-color: #3b82f6 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2), inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+[data-theme="dark"] option {
+    background-color: #1f2937 !important;
+    color: #f9fafb !important;
+}
+
+/* Language and interest buttons in dark mode */
+[data-theme="dark"] .bg-gray-100 {
+    background-color: #374151 !important;
+    border: 1px solid #4b5563;
+}
+
+[data-theme="dark"] .hover\:bg-gray-200:hover {
+    background-color: #4b5563 !important;
+}
+
+/* Cards and containers */
+[data-theme="dark"] .rounded-lg {
+    border: 1px solid #374151;
+}
+
+[data-theme="dark"] .bg-white {
+    background-color: #1f2937 !important;
+    border-color: #374151 !important;
+}
+
+/* Light mode input improvements for better visibility */
+input::placeholder,
+select::placeholder,
+textarea::placeholder {
+    color: #9ca3af !important;
+    opacity: 1;
+}
+
+input,
+select,
+textarea {
+    color: #111827 !important;
+}
+
+/* Ensure proper contrast for all text inputs */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="date"],
+select,
+textarea {
+    font-weight: 500;
+}
+.modern-btn {
+    background: linear-gradient(90deg, #00b4d8, #0077b6);
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.modern-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 180, 216, 0.3);
+}
+
+/* Chat Modal Styles */
+.chat-modal-container {
+    background-color: white;
+}
+
+[data-theme="dark"] .chat-modal-container {
+    background-color: var(--bg-secondary);
+}
+
+/* Chat message scrollbar */
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+[data-theme="dark"] .chat-messages::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+/* Fade-in animation for Travel Guide share menu */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeIn 0.3s ease-out;
+}
+
