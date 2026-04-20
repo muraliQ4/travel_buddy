@@ -27,14 +27,20 @@ import kidsModeRoutes from './routes/kidsMode.js';
 import pricingRoutes from './routes/pricing.js';
 import otpRoutes from './routes/otp.js';
 import rideShareRoutes from './routes/rideShare.js';
-import { access } from 'fs';
 
 dotenv.config();
 
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
-  .split(',')
-  .map((origin) => origin.trim())
+const normalizeOrigin = (value = '') =>
+  String(value).trim().toLowerCase().replace(/\/+$/, '');
+
+const allowedOrigins = [
+  ...(process.env.ALLOWED_ORIGINS || '').split(','),
+  process.env.ACCESS_FRONTEND_URL || ''
+]
+  .map((origin) => normalizeOrigin(origin))
   .filter(Boolean);
+
+console.log('✅ Allowed CORS origins:', allowedOrigins);
 
 const corsOriginValidator = (origin, callback) => {
   // Allow non-browser requests (curl/Postman/mobile apps)
@@ -43,7 +49,9 @@ const corsOriginValidator = (origin, callback) => {
     return;
   }
 
-  if (allowedOrigins.includes(origin)) {
+  const normalizedOrigin = normalizeOrigin(origin);
+
+  if (allowedOrigins.includes(normalizedOrigin)) {
     callback(null, true);
     return;
   }
