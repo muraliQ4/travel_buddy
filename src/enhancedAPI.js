@@ -1,7 +1,8 @@
 // Comprehensive API Service for All Features
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const BACKEND_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/api\/?$/, '').replace(/\/+$/, '');
+const API_BASE_URL = `${BACKEND_BASE_URL}/api`;
 
 // Helper function to get auth headers
 const getAuthHeaders = () => {

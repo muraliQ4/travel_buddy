@@ -1,6 +1,9 @@
 // Socket.IO service for real-time updates
 import { io } from 'socket.io-client';
 
+const BACKEND_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/api\/?$/, '').replace(/\/+$/, '');
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || BACKEND_BASE_URL;
+
 class SocketService {
   constructor() {
     this.socket = null;
@@ -12,7 +15,7 @@ class SocketService {
     this.currentUserId = userId || this.currentUserId;
 
     if (!this.socket) {
-      this.socket = io('http://localhost:5000', {
+      this.socket = io(SOCKET_URL, {
         transports: ['websocket', 'polling'],
         reconnection: true,
         reconnectionDelay: 1000,

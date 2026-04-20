@@ -11,6 +11,8 @@ import socketService from './socketService';
 import { InsurancePage, HelpCenterPage, PromoCodesPage, TravelGuidePage, TouristInfoPage, EmergencyPage, RideSharePage } from './components/NewFeatures';
 import ProfilePage from './components/ProfilePage';
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/api\/?$/, '').replace(/\/+$/, '');
+
 // --- Icon Components ---
 const HomeIcon = ({ active }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={`w-6 h-6 ${active ? 'text-white' : 'text-gray-400'}`}>
@@ -116,9 +118,9 @@ const HomePage = ({ publicPlans, rideSharePosts, currentUser, onJoinRequest, myR
     try {
       const token = localStorage.getItem('token');
       console.log('Token present:', !!token);
-      console.log('Fetching from URL:', `http://localhost:5000/api/auth/user/${memberId}`);
+      console.log('Fetching from URL:', `${API_BASE_URL}/api/auth/user/${memberId}`);
       
-      const response = await fetch(`http://localhost:5000/api/auth/user/${memberId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/user/${memberId}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -2936,7 +2938,7 @@ const GroupChatModal = ({ trip, currentUser, onClose }) => {
         try {
           const memberPromises = trip.members.map(async (memberId) => {
             const id = typeof memberId === 'string' ? memberId : memberId._id;
-            const response = await fetch(`http://localhost:5000/api/auth/user/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/api/auth/user/${id}`, {
               headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
               }
@@ -3011,7 +3013,7 @@ const GroupChatModal = ({ trip, currentUser, onClose }) => {
 
   const loadMessages = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/trips/${trip._id}/messages`, {
+      const response = await fetch(`${API_BASE_URL}/api/trips/${trip._id}/messages`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -3032,7 +3034,7 @@ const GroupChatModal = ({ trip, currentUser, onClose }) => {
     if (!newMessage.trim()) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/trips/${trip._id}/messages`, {
+      const response = await fetch(`${API_BASE_URL}/api/trips/${trip._id}/messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -3292,7 +3294,7 @@ const MembersPage = ({ trip, currentUser, onRemoveMember, onBack }) => {
     // For "Unknown User", fetch full details from server
     setLoadingUserDetails(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/user/${member._id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/user/${member._id}`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -3323,7 +3325,7 @@ const MembersPage = ({ trip, currentUser, onRemoveMember, onBack }) => {
           const memberId = member._id || member.user?._id || member.user || member;
           
           try {
-            const response = await fetch(`http://localhost:5000/api/auth/user/${memberId}`, {
+            const response = await fetch(`${API_BASE_URL}/api/auth/user/${memberId}`, {
               headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
               }

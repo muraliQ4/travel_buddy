@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import * as enhancedAPI from '../enhancedAPI';
 import socketService from '../socketService';
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/api\/?$/, '').replace(/\/+$/, '');
+
 // Insurance Feature Component
 export const InsurancePage = ({ currentUser, setPage }) => {
   const [insurances, setInsurances] = useState([]);
@@ -7192,7 +7194,7 @@ export const EmergencyPage = ({ currentUser, setPage }) => {
   const fetchEmergencyContacts = async () => {
     setLoadingContacts(true);
     try {
-      const response = await fetch('http://localhost:5000/api/emergency-contacts', {
+      const response = await fetch(`${API_BASE_URL}/api/emergency-contacts`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -7234,7 +7236,7 @@ export const EmergencyPage = ({ currentUser, setPage }) => {
     const fullPhoneNumber = newContact.countryCode + newContact.phone;
 
     try {
-      const response = await fetch('http://localhost:5000/api/emergency-contacts/add', {
+      const response = await fetch(`${API_BASE_URL}/api/emergency-contacts/add`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -7265,7 +7267,7 @@ export const EmergencyPage = ({ currentUser, setPage }) => {
     if (!confirm('Are you sure you want to delete this contact?')) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/emergency-contacts/${contactId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/emergency-contacts/${contactId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -7287,7 +7289,7 @@ export const EmergencyPage = ({ currentUser, setPage }) => {
   // Set primary contact
   const handleSetPrimary = async (contactId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/emergency-contacts/${contactId}/set-primary`, {
+      const response = await fetch(`${API_BASE_URL}/api/emergency-contacts/${contactId}/set-primary`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -7360,7 +7362,7 @@ export const EmergencyPage = ({ currentUser, setPage }) => {
     const fullPhoneNumber = (editContact.countryCode || '+1') + editContact.phone;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/emergency-contacts/${editingContact}`, {
+      const response = await fetch(`${API_BASE_URL}/api/emergency-contacts/${editingContact}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -7488,7 +7490,7 @@ export const EmergencyPage = ({ currentUser, setPage }) => {
         const { latitude, longitude } = position.coords;
         
         // Trigger SOS
-        const response = await fetch('http://localhost:5000/api/emergency/sos/quick-trigger', {
+        const response = await fetch(`${API_BASE_URL}/api/emergency/sos/quick-trigger`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -8163,7 +8165,7 @@ const RideGroupChatModal = ({ ride, currentUser, onClose }) => {
         try {
           const memberPromises = ride.members.map(async (memberId) => {
             const id = typeof memberId === 'string' ? memberId : memberId._id;
-            const response = await fetch(`http://localhost:5000/api/auth/user/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/api/auth/user/${id}`, {
               headers: {
                 'Authorization': `Bearer ${localStorage.getItem('token')}`
               }
@@ -8235,7 +8237,7 @@ const RideGroupChatModal = ({ ride, currentUser, onClose }) => {
 
   const loadMessages = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/rideshare/${ride._id}/messages`, {
+      const response = await fetch(`${API_BASE_URL}/api/rideshare/${ride._id}/messages`, {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
@@ -8256,7 +8258,7 @@ const RideGroupChatModal = ({ ride, currentUser, onClose }) => {
     if (!newMessage.trim()) return;
 
     try {
-      const response = await fetch(`http://localhost:5000/api/rideshare/${ride._id}/messages`, {
+      const response = await fetch(`${API_BASE_URL}/api/rideshare/${ride._id}/messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

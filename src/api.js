@@ -1,5 +1,6 @@
 // API client for backend communication
-const API_URL = 'http://localhost:5000/api';
+const BACKEND_BASE_URL = (import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000').replace(/\/api\/?$/, '').replace(/\/+$/, '');
+const API_URL = `${BACKEND_BASE_URL}/api`;
 
 // Helper to get auth token
 const getAuthToken = () => localStorage.getItem('token');
