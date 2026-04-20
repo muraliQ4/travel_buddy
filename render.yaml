@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: travelbuddy-backend
+    runtime: node
+    rootDir: server
+    plan: free
+    region: oregon
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: ACCESS_FRONTEND_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: MONGODB_URI
+        sync: false
