@@ -20,13 +20,14 @@ import insuranceRoutes from './routes/insurance.js';
 import promoRoutes from './routes/promos.js';
 import safetyRoutes from './routes/safety.js';
 import weatherRoutes from './routes/weather.js';
-import pickupZonesRoutes from './routes/pickupZones.js';
+import pickupZonesRoutes from './routes/pickupzones.js';
 import checkinRoutes from './routes/checkin.js';
 import travelSummaryRoutes from './routes/travelSummary.js';
 import kidsModeRoutes from './routes/kidsMode.js';
 import pricingRoutes from './routes/pricing.js';
 import otpRoutes from './routes/otp.js';
 import rideShareRoutes from './routes/rideShare.js';
+import { access } from 'fs';
 
 dotenv.config();
 
@@ -35,7 +36,7 @@ const server = createServer(app);
 const io = new Server(server, {
   cors: {
     // Allow Vite dev server on common ports during development
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: ["http://localhost:5173", "http://localhost:5174", process.env.ACCESS_FRONTEND_URL],
     methods: ["GET", "POST"],
     credentials: true
   }
