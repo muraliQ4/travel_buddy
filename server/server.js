@@ -31,12 +31,31 @@ import { access } from 'fs';
 
 dotenv.config();
 
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+
+const corsOriginValidator = (origin, callback) => {
+  // Allow non-browser requests (curl/Postman/mobile apps)
+  if (!origin) {
+    callback(null, true);
+    return;
+  }
+
+  if (allowedOrigins.includes(origin)) {
+    callback(null, true);
+    return;
+  }
+
+  callback(new Error(`Not allowed by CORS: ${origin}`));
+};
+
 const app = express();
 const server = createServer(app);
 const io = new Server(server, {
   cors: {
-    // Allow Vite dev server on common ports during development
-    origin: ["http://localhost:5173", "http://localhost:5174", process.env.ACCESS_FRONTEND_URL],
+    origin: corsOriginValidator,
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -47,7 +66,7 @@ app.set('io', io);
 
 // Middleware
 app.use(cors({
-  origin: ["http://localhost:5173", "http://localhost:5174"],
+  origin: corsOriginValidator,
   credentials: true
 }));
 app.use(express.json({ limit: '50mb' }));
